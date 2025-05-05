@@ -1,0 +1,65 @@
+﻿import pandas as pd
+import nltk
+from nltk.tokenize import RegexpTokenizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn import metrics
+
+
+# Load dataset
+data = pd.read_csv('data7.tsv', sep='\t')
+
+
+# Display first few rows to understand the structure
+data.head()
+
+
+# Get dataset information
+data.info()
+
+
+# Count occurrences of each unique sentiment
+data['Sentiment'].value_counts()
+
+
+# Text preprocessing using CountVectorizer
+# Tokenizer to remove symbols and numbers
+tokenizer = RegexpTokenizer(r'[a-zA-Z0-9]+')
+
+
+
+
+# Convert text data into numerical feature vectors
+cv = CountVectorizer(lowercase=True, stop_words='english', tokenizer=tokenizer.tokenize)
+text_counts = cv.fit_transform(data['Phrase'])
+print(text_counts)
+
+
+
+
+# Split dataset into training and testing sets (70% train, 30% test)
+X_train, X_test, y_train, y_test = train_test_split(text_counts, data['Sentiment'], test_size=0.3, random_state=1)
+
+
+# Train a Naive Bayes classifier
+clf = MultinomialNB()
+clf.fit(X_train, y_train)
+
+
+# Make predictions on the test set
+predicted = clf.predict(X_test)
+
+
+# Calculate and print model accuracy
+accuracy = metrics.accuracy_score(y_test, predicted)
+print("MultinomialNB Accuracy:", accuracy)
+
+
+# Use TF-IDF Vectorizer to transform text data
+tfidf = TfidfVectorizer()
+text_tfidf = tfidf.fit_transform(data['Phrase'])
+
+
+# Print transformed text feature matrix
+print(text_tfidf)
