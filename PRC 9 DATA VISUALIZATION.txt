@@ -1,0 +1,92 @@
+PRC 9 DATA VISUALIZATION
+1. Imports
+python
+CopyEdit
+import pandas as pd
+* import: Tells Python to load an external library.
+* pandas: A library for data tables (DataFrames).
+* as: Assigns an alias (nickname).
+* pd: Shortcut name for pandas (you’ll write pd.read_csv() instead of pandas.read_csv()).
+
+python
+CopyEdit
+import numpy as np
+* numpy: Library for numerical operations, especially on arrays.
+* np: Alias used when you need numpy functions like np.mean(), np.array().
+
+python
+CopyEdit
+import matplotlib.pyplot as plt
+* matplotlib.pyplot: Part of Matplotlib used to create plots and charts.
+* plt: Shortcut alias.
+
+python
+CopyEdit
+import seaborn as sns
+* seaborn: A library built on top of Matplotlib that makes statistical plots look better and easier.
+* sns: Common alias for seaborn.
+
+? 2. Load Data
+python
+CopyEdit
+dataset = pd.read_csv('data9.csv')
+* dataset: A variable (your DataFrame/table is stored in this).
+* =: Assignment operator — saves the right side into the left variable.
+* pd.read_csv: Function to read a CSV file using pandas.
+* 'data9.csv': Name of the file you're loading (must be in the same folder or full path should be given).
+
+? 3. Box Plots
+3.1
+python
+CopyEdit
+sns.boxplot(x='Sex', y='Age', data=dataset)
+* sns: The seaborn library.
+* boxplot: Function that creates a box-and-whisker plot.
+* x='Sex': Group data by the values in the ‘Sex’ column (e.g., Male/Female).
+* y='Age': Plot values from the ‘Age’ column vertically.
+* data=dataset: Use the data from the variable dataset.
+
+3.2
+python
+CopyEdit
+sns.boxplot(x='Sex', y='Age', data=dataset, hue="Survived")
+* hue="Survived":
+o Adds color grouping based on the 'Survived' column.
+o Each Sex group is split into two boxes: one for survived, one for not.
+
+3.3
+python
+CopyEdit
+sns.boxplot(x="Age", y="Fare", hue="Survived", data=dataset, linewidth=3)
+* x="Age": Age values are treated as categories (on X-axis).
+* y="Fare": Fare values go on the Y-axis.
+* hue="Survived": Color grouping by survival.
+* linewidth=3: Sets the thickness of lines in the boxplot.
+
+3.4
+python
+CopyEdit
+sns.boxplot(x='Sex', y='Age', data=dataset, notch=1)
+* notch=1: Draws a notch in the box around the median.
+* It gives a visual cue about the uncertainty around the median.
+
+3.5
+python
+CopyEdit
+sns.boxplot(x='Sex', y='Age', data=dataset, notch=1, bootstrap=5)
+* bootstrap=5: Uses bootstrapping (a statistical technique) with 5 samples to estimate confidence interval for the notch.
+
+3.6
+python
+CopyEdit
+sns.boxplot(data=dataset, orient="v")
+* data=dataset: Use all numeric columns in the dataset.
+* orient="v": Vertical orientation — each column becomes a vertical boxplot.
+
+3.7
+python
+CopyEdit
+sns.boxplot(data=dataset, orient="h")
+* orient="h": Horizontal orientation — each column becomes a horizontal boxplot.
+
+
